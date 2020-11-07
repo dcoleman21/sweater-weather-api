@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-describe "API weather for a city endpoint" do
+describe "API weather request for a city endpoint" do
   it "returns the forecast for a specific location in JSON" do
-    get '/api/v1/forecast?location=denver,co'
 
+    get '/api/v1/forecast?location=denver,co'
+    # require "pry"; binding.pry
     response = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_successful
