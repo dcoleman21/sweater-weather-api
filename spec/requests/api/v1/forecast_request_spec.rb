@@ -4,43 +4,41 @@ describe "API weather request for a city endpoint" do
   it "returns the forecast for a specific location in JSON" do
 
     get '/api/v1/forecast?location=denver,co'
-    # require "pry"; binding.pry
-    response = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_successful
+    json = JSON.parse(response.body, symbolize_names: true)
 
-    current_weather = response[:data]
+    expect(json[:data][:id]).to eq(nil)
+    expect(json[:data][:type]).to eq('forecast')
+    expect(json[:data]).to have_key(:attributes)
+    expect(json[:data][:attributes]).to be_a(Hash)
+    expect(json[:data][:attributes]).to have_key(:current_weather)
+    expect(json[:data][:attributes][:current_weather]).to be_a(Hash)
 
-    expect(current_weather).to have_key(:id)
-    expect(current_weather[:id]).to eq('')
-    expect(current_weather).to have_key(:type)
-    expect(current_weather[:type]).to eq('forecast')
-    expect(current_weather).to have_key(:attributes)
-    expect(current_weather[:attributes]).to be_a(Hash)
-    expect(current_weather[:attributes]).to have_key(:current_weather)
-    expect(current_weather[:attributes][:current_weather]).to be_a(Hash)
-    expect(current_weather[:attributes][:current_weather]).to have_key(:datetime)
-    expect(current_weather[:attributes][:current_weather][:datetime]).to be_a(Time)
-    expect(current_weather[:attributes][:current_weather]).to have_key(:sunrise)
-    expect(current_weather[:attributes][:current_weather][:sunrise]).to be_a(Time)
-    expect(current_weather[:attribute][:current_weather]).to have_key(:sunset)
-    expect(current_weather[:attributes][:current_weather][:sunset]).to be_a(Time)
-    expect(current_weather[:attribute][:current_weather]).to have_key(:temperature)
-    expect(current_weather[:attributes][:current_weather][:temperature]).to be_a(Float)#Fahrenheit
-    expect(current_weather[:attribute][:current_weather]).to have_key(:feels_like)
-    expect(current_weather[:attributes][:current_weather][:feels_like]).to be_a(Float)#Fahrenheit
-    expect(current_weather[:attribute][:current_weather]).to have_key(:humidity)
-    expect(current_weather[:attribute][:current_weather][:humidity]).to be_an(Integer)
-    expect(current_weather[:attribute][:current_weather]).to have_key(:uvi)
-    expect(current_weather[:attribute][:current_weather][:uvi]).to be_a(Float)
-    expect(current_weather[:attribute][:current_weather]).to have_key(:visibility)
-    expect(current_weather[:attribute][:current_weather][:visibility]).to be_an(Integer)
-    expect(current_weather[:attribute][:current_weather]).to have_key(:conditions)
-    expect(current_weather[:attribute][:current_weather][:conditions]).to be_a(String)
-    expect(current_weather[:attribute][:current_weather]).to have_key(:icon)
-    expect(current_weather[:attribute][:current_weather][:icon]).to be_a(String)
+    current_weather = json[:data][:attributes][:current_weather]
 
-    daily_weather = response[:data][:attributes][:daily_weather]
+    expect(current_weather).to have_key(:datetime)
+    expect(current_weather[:datetime]).to be_a(Time)
+    expect(current_weather).to have_key(:sunrise)
+    expect(current_weather[:sunrise]).to be_a(Time)
+    expect(current_weather).to have_key(:sunset)
+    expect(current_weather[:sunset]).to be_a(Time)
+    expect(current_weather).to have_key(:temperature)
+    expect(current_weather[:temperature]).to be_a(Float)#Fahrenheit
+    expect(current_weather).to have_key(:feels_like)
+    expect(current_weather[:feels_like]).to be_a(Float)#Fahrenheit
+    expect(current_weather).to have_key(:humidity)
+    expect(current_weather[:humidity]).to be_an(Integer)
+    expect(current_weather).to have_key(:uvi)
+    expect(current_weather[:uvi]).to be_a(Float)
+    expect(current_weather).to have_key(:visibility)
+    expect(current_weather[:visibility]).to be_an(Integer)
+    expect(current_weather).to have_key(:conditions)
+    expect(current_weather[:conditions]).to be_a(String)
+    expect(current_weather).to have_key(:icon)
+    expect(current_weather[:icon]).to be_a(String)
+
+    daily_weather = json[:data][:attributes][:daily_weather]
 
     expect(daily_weather).to be_an(Array)
     expect(daily_weather[0]).to have_key(:date)
