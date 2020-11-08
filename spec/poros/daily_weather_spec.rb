@@ -287,15 +287,16 @@ describe DailyWeather do
         ]
     }
 
-    daily_weather = DailyWeather.new(data)
-    expect(daily_weather).to be_a(DailyWeather)
-    expect(daily_weather).to be_an(Array)
-    expect(daily_weather.date).to be_a(Time)
-    expect(daily_weather.sunrise).to be_a(Time)
-    expect(daily_weather.sunset).to be_a(Time)
-    expect(daily_weather.max_temp).to be_a(Float)
-    expect(daily_weather.min_temp).to be_a(Float)
-    expect(daily_weather.conditions).to be_a(String)
-    expect(daily_weather.icon).to be_a(String)
+    data[:daily].each do |daily_data|
+      daily = DailyWeather.new(daily_data)
+      expect(daily).to be_a(DailyWeather)
+      expect(daily.date).to be_a(Time)
+      expect(daily.sunrise).to be_a(Time)
+      expect(daily.sunset).to be_a(Time)
+      expect(daily.max_temp).to be_a(Float)
+      expect(daily.min_temp).to be_a(Float)
+      expect(daily.conditions).to be_a(String)
+      expect(daily.icon).to be_a(String)
+    end
   end
 end
