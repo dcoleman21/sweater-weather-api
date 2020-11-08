@@ -1,8 +1,7 @@
 require 'rails_helper'
 
-describe "API weather request for a city endpoint" do
-  it "returns the forecast for a specific location in JSON" do
-
+RSpec.describe "Forecast request" do
+  it "returns the forecast for a specific location" do
     get '/api/v1/forecast?location=denver,co'
 
     expect(response).to be_successful
