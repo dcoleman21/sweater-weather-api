@@ -1,6 +1,6 @@
 class GeoFacade
 
-  def self.fetch_coordinates(location)
+  def self.location(location)
     response = GeocodeService.get_address(location)
     Location.new(response)
   end
