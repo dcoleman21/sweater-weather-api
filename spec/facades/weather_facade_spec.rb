@@ -7,11 +7,13 @@ RSpec.describe 'Weather Facade' do
     forecast = WeatherFacade.fetch_weather(lat, lon)
 
     expect(forecast).to be_a(Forecast)
-    expect(forecast.current).to be_a(Hash)
-    expect(forecast.current.datetime).to be_a(Time)
-    expect(forecast.daily).to be_an(Array)
-    expect(forecast.daily.max_temp).to be_a(Numeric)
-    expect(forecast.hourly).to be_an(Array)
-    expect(forecast.hourly.condition).to be_a(String)
+    expect(forecast.current_weather).to be_a(Weather)
+    expect(forecast.current_weather.datetime).to be_a(Time)
+    expect(forecast.daily_weather).to be_an(Array)
+    expect(forecast.daily_weather.first).to be_a(DailyWeather)
+    expect(forecast.daily_weather.first.max_temp).to be_a(Numeric)
+    expect(forecast.hourly_weather).to be_an(Array)
+    expect(forecast.hourly_weather.first).to be_an(HourlyWeather)
+    expect(forecast.hourly_weather.first.conditions).to be_a(String)
   end
 end
