@@ -33,9 +33,9 @@ RSpec.describe Weather do
         }
     }
 
-    weather = Weather.new(data)
+    weather = Weather.new(data[:current])
     expect(weather).to be_a(Weather)
-    expect(weather.datetme).to be_a(Time)
+    expect(weather.datetime).to be_a(Time)
     expect(weather.sunrise).to be_a(Time)
     expect(weather.sunset).to be_a(Time)
     expect(weather.temperature).to be_a(Float)
@@ -43,7 +43,7 @@ RSpec.describe Weather do
     expect(weather.humidity).to be_a(Numeric)
     expect(weather.uvi).to be_a(Numeric)
     expect(weather.visibility).to be_a(Numeric)
-    expect(weather.condtions).to be_a(String)
+    expect(weather.conditions).to be_a(String)
     expect(weather.icon).to be_a(String)
   end
 end
