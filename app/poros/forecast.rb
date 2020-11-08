@@ -5,22 +5,22 @@ class Forecast
 
   def initialize(weather)
     @current_weather = current(weather)
-    @daily_weather   = daily(weather)
-    @hourly_weather  = hourly(weather)
+    @daily_weather   = daily(weather[:daily])
+    @hourly_weather  = hourly(weather[:hourly])
   end
 
   def current(weather)
-    Weather.new(weather)
+    Weather.new(weather[:current])
   end
 
   def daily(weather, limit = 5)
-    weather[:daily].first.map do |data|
+    weather.first(limit).map do |data|
       DailyWeather.new(data)
     end
   end
 
   def hourly(weather, limit = 8)
-    weather[:hourly].first(limit).map do |data|
+    weather.first(limit).map do |data|
       HourlyWeather.new(data)
     end
   end
