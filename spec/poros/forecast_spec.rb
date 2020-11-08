@@ -1327,9 +1327,8 @@ RSpec.describe Forecast do
 
     forecast = Forecast.new(data)
     expect(forecast).to be_a(Forecast)
-    expect(forecast).to be_a(Hash)
-    expect(forecast.current_weather).to be_a(Hash)
-    expect(forecast.daily_weather).to be_an(Array)
-    expect(forecast.hourly_weather).to be_an(Array)
+    expect(forecast.current_weather).to be_a(Weather)
+    # expect(forecast.daily_weather).to be_a(DailyWeather)
+    # expect(forecast.hourly_weather).to be_a(HourlyWeather)
   end
 end
