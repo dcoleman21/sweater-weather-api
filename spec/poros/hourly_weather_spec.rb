@@ -1015,13 +1015,11 @@ RSpec.describe HourlyWeather do
       ]
       }
       hourly = HourlyWeather.new(data[:hourly][0])
-
       expect(hourly).to be_a(HourlyWeather)
-      expect(hourly).to be_an(Array)
       expect(hourly.time).to be_a(Time)
       expect(hourly.wind_speed).to be_a(String)
-      expect(hourl.wind_direction).to be_a(String)
-      expect(hourly.condition).to be_a(String)
+      expect(hourly.wind_direction).to be_a(Integer)#figure out how to get this in degrees
+      expect(hourly.conditions).to be_a(String)
       expect(hourly.icon).to be_a(String)
   end
 end
