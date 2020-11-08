@@ -3,7 +3,7 @@ class Location
               :lon
 
   def initialize(attr)
-    @lat = attr[:results][0][:locations][0][:latLng][:lat]
-    @lon = attr[:results][0][:locations][0][:latLng][:lng]
+    @lat = attr[:results].first[:locations].first[:latLng][:lat]
+    @lon = attr[:results].first[:locations].first[:latLng][:lng]
   end
 end
