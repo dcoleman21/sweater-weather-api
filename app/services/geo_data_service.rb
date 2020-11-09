@@ -1,4 +1,4 @@
-class GeocodeService
+class GeoDataService
 
   def self.get_address(location)
     response = Faraday.get("#{ENV['MAP_URL']}/geocoding/v1/address?key=#{ENV['MAPQUEST_API_KEY']}&location=#{location}")
