@@ -1,14 +1,13 @@
 class GeoDataService
 
-  def self.get_address(location)
+  def self.get_address(location)#"denver,co"
     response = Faraday.get("#{ENV['MAP_URL']}/geocoding/v1/address?key=#{ENV['MAPQUEST_API_KEY']}&location=#{location}")
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  def self.get_distance(destination, start_point)
-    a = start_point.lat
-    b = start_point.lon
-    start = "#{a}, #{b}"
+  def self.get_distance(lat1, lon1, lat2, lon2)
+    start = "#{lat1}, #{lon1}"#start at denver lat,lon
+    destination= "#{lat2}, #{lon2}"#end at roxborough lat, lon
     response = Faraday.get("#{ENV['MAP_URL']}/directions/v2/route?key=#{ENV['MAPQUEST_API_KEY']}&from=#{start}&to=#{destination}")
     JSON.parse(response.body, symbolize_names: true)
   end
