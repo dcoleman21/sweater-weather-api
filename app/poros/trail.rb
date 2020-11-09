@@ -1,21 +1,32 @@
 class Trail
-  attr_reader :name,
-              :summary,
-              :difficulty,
-              :location,
-              :distance_to_trail
+  attr_reader :location, :forecast, :trails
 
-  def initialize(data, coord)
-    @name = data[:name]
-    @summary = data[:summary]
-    @difficulty = data[:difficulty]
-    @location = data[:location]
-    @start_point = coord
-    @distance_to_trail = distance_to_trail
+  def initialize(trails, weather, coordinates, location)
+    @trails = trails_info(trails, coordinates)
+    @forecast = trail_forecast(weather)
+    @location = location
   end
 
-  def distance_to_trail
-    x = GeoFacade.get_distance(@location, @start_point)
-    x[:route][:distance]
+  def trails_info(trails, coordinates)
+    trails[:trails].map do |trail|
+      {
+        name: trail[:name],
+        summary: trail[:summary],
+        difficulty: trail[:difficulty],
+        location: trail[:location],
+        distance_to_trail: distance(coordinates.lat, coordinates.lon, trail[:latitude], trail[:longitude])
+      }
+    end
+  end
+
+  def distance(lat1, lon1, lat2, lon2)
+    GeoFacade.get_distance(lat1, lon1, lat2, lon2)
+  end
+
+  def trail_forecast(weather)
+    {
+      summary: weather.current_weather.conditions,
+      temperature: weather.current_weather.temperature
+    }
   end
 end
