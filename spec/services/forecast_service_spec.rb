@@ -7,5 +7,4 @@ RSpec.describe ForecastService do
 
     result = ForecastService.forecast(lat, lon)
   end
-
 end
