@@ -8,6 +8,8 @@ RSpec.describe ImageFacade do
 
     expect(photo).to be_a(Image)
     expect(photo.image_url).to be_a(String)
-    expect(photo.credit).to be_a(String)
+    expect(photo.credit).to be_a(Hash)
+    expect(photo.credit[:source]).to be_a(String)
+    expect(photo.credit[:author]).to be_a(String)
   end
 end
