@@ -6,12 +6,12 @@ class GeoFacade
   end
 
   def self.get_distance(lat1, lon1, lat2, lon2)
-    require "pry"; binding.pry
     response = GeoDataService.get_distance(lat1, lon1, lat2, lon2)
     response[:route][:distance]#pulls only the route distance from mapquest route hash
   end
 
   def self.get_travel_time(lat1, lon1, lat2, lon2)
+    require "pry"; binding.pry
     response = GeoDataService.get_distance(lat1, lon1, lat2, lon2)
     response[:route][:legs][:formattedTime]
   end

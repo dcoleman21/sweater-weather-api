@@ -1,5 +1,5 @@
-# require 'rails_helper'
-#
+# # require 'rails_helper'
+# #
 # RSpec.describe MunchieFacade do
 #   it "returns a restaurant object with specific food type" do
 #     dest = 'pueblo,co'
@@ -26,4 +26,4 @@
 #     expect(result.restaurant.first).to have_key(:address)
 #     expect(result.restaurant.first[:address]).to be_a(String)
 #   end
-# end
+# # end

@@ -1,10 +1,9 @@
 class MunchieService
-  def self.search_restaurant(term, dest)
+  def self.search_restaurant(lat, lon, term)
     response = conn.get('/v3/businesses/search') do |req|
       req.params['term'] = term
-      req.params['location'] = dest
-      # req.params['latitude'] = 38.2325574
-      # req.params['longitude'] = -104.6628568
+      req.params['latitude'] = 38.2325574
+      req.params['longitude'] = -104.6628568
       req.params['open_now'] = true
     end
     JSON.parse(response.body, symbolize_names: true)

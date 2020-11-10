@@ -12,11 +12,11 @@ class GeoDataService
     JSON.parse(response.body, symbolize_names: true)
   end
 
-#   def self.get_travel_time(lat1, lon1, lat2, lon2)
-#     require "pry"; binding.pry
-#     start = "#{lat1}, #{lon1}"
-#     dest = "#{lat2}, #{lon2}"
-#     response = Faraday.get("#{ENV['MAP_URL']}/directions/v2/route?key=#{ENV['MAPQUEST_API_KEY']}&from=#{start}&to=#{dest}")
-#     JSON.parse(response.body, symbolize_names: true)
-#   end
-# end
+  # def self.get_travel_time(lat1, lon1, lat2, lon2)
+  #   require "pry"; binding.pry
+  #   start = "#{lat1}, #{lon1}"
+  #   dest = "#{lat2}, #{lon2}"
+  #   response = Faraday.get("#{ENV['MAP_URL']}/directions/v2/route?key=#{ENV['MAPQUEST_API_KEY']}&from=#{start}&to=#{dest}")
+  #   JSON.parse(response.body, symbolize_names: true)
+  # end
+end

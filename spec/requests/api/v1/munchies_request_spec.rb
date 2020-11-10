@@ -8,7 +8,7 @@ RSpec.describe 'Munchies API' do
 
       expect(response).to be_successful
       munchie = JSON.parse(response.body, symbolize_names: true)
-
+      require "pry"; binding.pry
       expect(munchie).to be_a(Hash)
       expect(munchie).to have_key(:data)
       expect(munchie[:data]).to be_a(Hash)
