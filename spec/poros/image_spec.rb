@@ -310,13 +310,21 @@ RSpec.describe Image do
         }
 
     symbolized = data.deep_symbolize_keys
+    location = 'denver,co'
 
-    cli = Image.new(symbolized)
+    cli = Image.new(symbolized, location)
 
     expect(cli).to be_an(Image)
-    expect(cli.image_url).to eq(symbolized[:photos][1][:src][:original])
-    expect(cli.credit).to be_a(Hash)
-    expect(cli.credit[:source]).to eq(symbolized[:photos][1][:photographer_url])
-    expect(cli.credit[:author]).to eq(symbolized[:photos][1][:photographer])
+    expect(cli.image).to be_a(Hash)
+    expect(cli.image).to have_key(:location)
+    expect(cli.image[:location]).to be_a(String)
+    expect(cli.image).to have_key(:image_url)
+    expect(cli.image[:image_url]).to be_a(String)
+    expect(cli.image).to have_key(:credit)
+    expect(cli.image[:credit]).to be_a(Hash)
+    expect(cli.image[:credit]).to have_key(:source)
+    expect(cli.image[:credit][:source]).to be_a(String)
+    expect(cli.image[:credit]).to have_key(:author)
+    expect(cli.image[:credit][:author]).to be_a(String)
   end
 end
