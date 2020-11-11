@@ -5,16 +5,22 @@ RSpec.describe "Forecast request" do
     get '/api/v1/forecast?location=denver,co'
 
     expect(response).to be_successful
-    json = JSON.parse(response.body, symbolize_names: true)
+    forecast = JSON.parse(response.body, symbolize_names: true)
 
-    expect(json[:data][:id]).to eq(nil)
-    expect(json[:data][:type]).to eq('forecast')
-    expect(json[:data]).to have_key(:attributes)
-    expect(json[:data][:attributes]).to be_a(Hash)
-    expect(json[:data][:attributes]).to have_key(:current_weather)
-    expect(json[:data][:attributes][:current_weather]).to be_a(Hash)
+    expect(forecast).to be_a(Hash)
+    expect(forecast).to have_key(:data)
+    expect(forecast[:data]).to be_a(Hash)
 
-    current_weather = json[:data][:attributes][:current_weather]
+    expect(forecast[:data]).to have_key(:id)
+    expect(forecast[:data][:id]).to eq(nil)
+    expect(forecast[:data]).to have_key(:type)
+    expect(forecast[:data][:type]).to eq('forecast')
+    expect(forecast[:data]).to have_key(:attributes)
+    expect(forecast[:data][:attributes]).to be_a(Hash)
+    expect(forecast[:data][:attributes]).to have_key(:current_weather)
+    expect(forecast[:data][:attributes][:current_weather]).to be_a(Hash)
+
+    current_weather = forecast[:data][:attributes][:current_weather]
 
     expect(current_weather).to have_key(:datetime)
     expect(Time.parse(current_weather[:datetime])).to be_a(Time)
@@ -37,36 +43,40 @@ RSpec.describe "Forecast request" do
     expect(current_weather).to have_key(:icon)
     expect(current_weather[:icon]).to be_a(String)
 
-    daily_weather = json[:data][:attributes][:daily_weather]
+    expect(forecast[:data][:attributes]).to have_key(:daily_weather)
+    expect(forecast[:data][:attributes][:daily_weather]).to be_an(Array)
+    expect(forecast[:data][:attributes][:daily_weather].count).to eq(5)
+    forecast[:data][:attributes][:daily_weather].each do |day|
+      expect(day).to have_key(:date)
+      expect(Time.parse(day[:date])).to be_a(Time)
+      expect(day).to have_key(:sunrise)
+      expect(Time.parse(day[:sunrise])).to be_a(Time)
+      expect(day).to have_key(:sunset)
+      expect(Time.parse(day[:sunset])).to be_a(Time)
+      expect(day).to have_key(:max_temp)
+      expect(day[:max_temp]).to be_a(Float)#Fahrenheit
+      expect(day).to have_key(:min_temp)
+      expect(day[:min_temp]).to be_a(Float)#Fahrenheit
+      expect(day).to have_key(:conditions)
+      expect(day[:conditions]).to be_a(String)
+      expect(day).to have_key(:icon)
+      expect(day[:icon]).to be_a(String)
+    end
 
-    expect(daily_weather).to be_an(Array)
-    expect(daily_weather[0]).to have_key(:date)
-    expect(Time.parse(daily_weather[0][:date])).to be_a(Time)
-    expect(daily_weather[0]).to have_key(:sunrise)
-    expect(Time.parse(daily_weather[0][:sunrise])).to be_a(Time)
-    expect(daily_weather[0]).to have_key(:sunset)
-    expect(Time.parse(daily_weather[0][:sunset])).to be_a(Time)
-    expect(daily_weather[0]).to have_key(:max_temp)
-    expect(daily_weather[0][:max_temp]).to be_a(Float)#Fahrenheit
-    expect(daily_weather[0]).to have_key(:min_temp)
-    expect(daily_weather[0][:min_temp]).to be_a(Float)#Fahrenheit
-    expect(daily_weather[0]).to have_key(:conditions)
-    expect(daily_weather[0][:conditions]).to be_a(String)
-    expect(daily_weather[0]).to have_key(:icon)
-    expect(daily_weather[0][:icon]).to be_a(String)
-    
-    hourly_weather = json[:data][:attributes][:hourly_weather]
-
-    expect(hourly_weather).to be_an(Array)
-    expect(hourly_weather[0]).to have_key(:time)
-    expect(Time.parse(hourly_weather[0][:time])).to be_a(Time)
-    expect(hourly_weather[0]).to have_key(:wind_speed)
-    expect(hourly_weather[0][:wind_speed]).to be_a(String)#mph
-    expect(hourly_weather[0]).to have_key(:wind_direction)
-    expect(hourly_weather[0][:wind_speed]).to be_a(String)#check wikipedia for how to convert this numeric value
-    expect(hourly_weather[0]).to have_key(:conditions)
-    expect(hourly_weather[0][:conditions]).to be_a(String)
-    expect(hourly_weather[0]).to have_key(:icon)
-    expect(hourly_weather[0][:icon]).to be_a(String)
+    expect(forecast[:data][:attributes]).to have_key(:hourly_weather)
+    expect(forecast[:data][:attributes][:hourly_weather]).to be_an(Array)
+    expect(forecast[:data][:attributes][:hourly_weather].count).to eq(8)
+    forecast[:data][:attributes][:hourly_weather].each do |hour|
+      expect(hour).to have_key(:time)
+      expect(Time.parse(hour[:time])).to be_a(Time)
+      expect(hour).to have_key(:wind_speed)
+      expect(hour[:wind_speed]).to be_a(String)#mph
+      expect(hour).to have_key(:wind_direction)
+      expect(hour[:wind_speed]).to be_a(String)#check wikipedia for how to convert this numeric value
+      expect(hour).to have_key(:conditions)
+      expect(hour[:conditions]).to be_a(String)
+      expect(hour).to have_key(:icon)
+      expect(hour[:icon]).to be_a(String)
+    end
   end
 end
